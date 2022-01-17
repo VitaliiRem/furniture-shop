@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #EFEFEF;
@@ -6,27 +10,41 @@ body {
 }
 
 .wrapper {
-max-width: 1110px;
-padding-left: 15px;
-padding-right: 15px;
-margin: 0 auto
+    max-width: 1110px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 0 auto
 }
 
 .nav {
-display: flex;
-justify-content: center;
-list-style-type: none;
-padding-left: 0;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding-left: 0;
 }
 
 .nav > li{
-margin-left: 10px;
-margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .nav > li a{
-text-decoration: none;
-color: #333333;
+    text-decoration: none;
+    color: #333333;
+    border-radius: 10px;
+    background-color: transparent;
+    padding: 5px 5px;
+    margin-left: 5px;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+/* Попробовал различные эффекты анимации и рамок для кнопок */
+.nav > li a:hover {
+    box-shadow: inset 0 0 0 4px #6ab874;
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 .header {
@@ -39,8 +57,40 @@ color: #333333;
     align-items: center;
     padding: 10px 0px;
 }
+
+.header-hamburger {
+    display: none;
+    background-color: #78d170;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Я отстаю по адаптивной вёртске, много чего непонятного */
+@media screen and (max-width: 1000px) {
+    .header-bottom {
+        position: relative;
+    }
+
+    /* Пытался сделать кнопку "гамбургер", но не понимаю как сделать её в виде 3-х полосок */
+    .header-hamburger {
+        display: block;
+    }
+
+    .nav {
+        display: none;
+        position: absolute;
+        border: 1px solid grey;
+        left: 0;
+        top: 40px;
+        background-color: #EFEFEF;
+    }
+
+    .header-bottom:hover .nav {
+        display: block;
+    }
+}
+
 .logo {
-    color: #66C05D;
     font-size: 36px;
     font-weight: 700;
     display: flex;
@@ -49,10 +99,27 @@ color: #333333;
 }
 
 .logo-image {
+    background-size: cover;
     display: block;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     background-image: url(../img/logo.svg);
+    transition: padding ease 0.3s;
+}
+
+.logo-image:hover {
+    padding: 10px;
+}
+
+.logo-text {
+    color: #66C05D;
+    position: relative;
+    top: 0px;
+    transition: transform .2s ease-in-out;
+}
+
+.logo-text:hover {
+    transform: translate3d(35px, 0px, 0px);
 }
 
 .header-info span {
@@ -74,14 +141,13 @@ color: #333333;
     background-color: #66C05D;
 }
 
-
 .header-bottom {
     padding: 10px 0 ;
 }
 
 .header-bottom .nav {
-font-size: 16px;
-margin: 0;
+    font-size: 16px;
+    margin: 0;
 }
 
 hr{
@@ -103,15 +169,20 @@ hr{
 }
 
 .title {
-font-size: 48px;
-font-weight: 700;
-margin-bottom: 39px;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 39px;
 }
 
 .title-h2 {
-font-size: 24px;
-font-weight: 700;
-padding: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 8px;
+    transition: transform .2s ease-in-out;
+}
+
+.title-h2:hover {
+    transform: translate3d(35px, 0px, 0px);
 }
 
 .title-h3 {
@@ -121,25 +192,62 @@ padding: 8px;
 }
 
 .banner p{
-margin-bottom: 20px;
-max-width: 288px;
-
+    margin-bottom: 20px;
+    max-width: 288px;
 }
 
 .btn {
-    color: white;
+    position: relative;
+    display: inline-block;
+    width: 160px;
+    height: 4s0px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    font-size: 15px;
     text-decoration: none;
-    border-radius: 10px;
-    border: 2px solid white;
-    background-color: transparent;
-    padding: 10px 15px;
-    transition: 0.2s ease;
-}
-
-.btn:hover {
-    background-color: white;
-    color:#333333
-}
+    font-family: sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #03f453, #027515, #ffeb3b, #03a9f4);
+    background-size: 400%;
+    border-radius: 30px;
+    z-index: 1;
+  }
+   
+  /* Долго мучался с эффектами для кнопок. Почему-то при наведении на кнопку - включалась анимация не самой кнопки, а всей панели навигации */
+  .btn:hover {
+    animation: animate 8s linear infinite;
+  }
+   
+  @keyframes animate {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 400%;
+    }
+  }
+   
+  .btn:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    z-index: -1;
+    background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    background-size: 200%;
+    border-radius: 20px;
+    opacity: 0;
+    transition: .5s;
+  }
+   
+  .btn:hover:before {
+    filter: blur(20px);
+    opacity: 1;
+    animation: animate 8s linear infinite;
+  }
 
 .bg-white {
     background-color: white;
@@ -155,12 +263,11 @@ max-width: 288px;
 
 .bg-green-item {
     flex: 0 0 8%;
-    padding: 0 15px;
+    padding: 0 35px;
 }
 
 .bg-green-item:last-child {
     flex: 0 0 30%;
-    text-align: center;
 }
 
 .bg-green h3 {
@@ -172,7 +279,7 @@ max-width: 288px;
 .bg-green input {
 font-size: 14px;
 border: 1px solid #fff;
-border-radius: 10px;
+border-radius: 5px;
 padding: 6px 8px;
 }
 
@@ -187,6 +294,12 @@ padding: 6px 8px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 0 30px;
+}
+
+@media screen and (max-width: 900px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .grid-item-title {
@@ -214,7 +327,7 @@ padding: 6px 8px;
 }
 
 .grid-item-catalog .bg-white {
-padding: 15 px 30 px;
+    padding: 15px 30px;
 }
 
 .grid-price {
@@ -267,4 +380,12 @@ font-weight: 500;
 .footer-bottom a {
     color: #828282;
     text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media screen and (max-width: 980px) {
+    
 }
